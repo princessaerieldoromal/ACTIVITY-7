@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<h2>Student Scores</h2>
+
+<canvas id="scoreChart"></canvas>
+
+<script>
+const names = {{ names|safe }};
+const scores = {{ scores|safe }};
+
+const ctx = document.getElementById('scoreChart');
+
+new Chart(ctx, {
+    type: 'pie',  // ✅ change to 'pie'
+    data: {
+        labels: names,
+        datasets: [{
+            label: 'Scores',
+            data: scores,
+            backgroundColor: [
+                'red', 'blue', 'green', 'orange', 'purple', 'yellow'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Student Scores Pie Chart'
+            }
+        }
+    }
+});
+</script>
+
+<!-- TABLE SHOULD BE OUTSIDE SCRIPT -->
+
+<h3>Student Records</h3>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Subject</th>
+        <th>Exam Date</th>
+    </tr>
+
+    {% for student in students %}
+    <tr>
+        <td>{{ student.name }}</td>
+        <td>{{ student.score }}</td>
+        <td>{{ student.subject }}</td>
+        <td>{{ student.exam_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
